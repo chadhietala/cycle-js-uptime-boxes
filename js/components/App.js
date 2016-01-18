@@ -1,33 +1,44 @@
 import {Observable} from 'rx';
-import {div, img} from '@cycle/dom';
-import AdjectiveInput from './AdjectiveInput';
-import Sentence from './Sentence';
+import {div} from '@cycle/dom';
+import ServerUptime from './ServerUptime';
 
+function servers() {
+  return [
+    server("Stefan's Server"),
+    server("Godfrey's Server"),
+    server("Yehuda's Server"),
+    server("Chad's Server"),
+    server("Robert's Server 1"),
+    server("Robert's Server 2"),
+    server("Robert's Server 3"),
+    server("Robert's Server 4"),
+    server("Robert's Server 5"),
+    server("Robert's Server 6")
+  ];
+}
 
-function App(sources) {
+function server(name) {
+  let days = [];
 
-  const adjectiveInputComponent = AdjectiveInput({DOM: sources.DOM});
-  const adjectiveInputVTree$ = adjectiveInputComponent.DOM;
-  const adjectiveInputValue$ = adjectiveInputComponent.inputValue$;
+  for (let i=0; i<=364; i++) {
+    let up = Math.random() > 0.2;
+    days.push({ number: i, up });
+  }
 
-  const sentenceSources = {DOM: sources.DOM, prop$: {adjectiveInputValue$}};
-  const sentenceComponent = Sentence(sentenceSources);
-  const sentenceVTree$ = sentenceComponent.DOM;
+  return { name, days };
+}
 
-  const vTree$ = Observable
-        .combineLatest(
-          adjectiveInputVTree$,
-          sentenceVTree$,
-          (inputVTree, sentenceVTree) =>
-            div({className: 'app'}, [
-              img({src: '/images/cyclejs_logo.svg', width: 200}),
-              sentenceVTree,
-              inputVTree
-            ])
-        );
-
+const App = (sources) => {
+  const dom = () => { 
+    return servers().map((server) => {
+      return ServerUptime(server)
+    });
+  }
+  
   const sinks = {
-    DOM: vTree$
+    DOM: Observable.interval(50).timeInterval().map(() => {
+      return div(dom());
+    })
   };
 
   return sinks;

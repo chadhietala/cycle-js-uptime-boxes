@@ -1,34 +1,52 @@
-html, body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: 'Merriweather', Georgia, serif;
-}
-#root {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100%;
-  background-color: #24242d; 
-}
-
-.app {
-  text-align: center;
-}
-
-.adjective-input {
-  padding: 0.2em;
-  border: none;
-  background: none;
-  border-bottom: 2px solid #C6FC93;
-  font-size: 2em;
-  color: #C6FC93;
-  outline: none;
-  text-align: center;
-}
-
-.sentence {
-  font-size: 4em;
-  color: white;
-}
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      server-uptime {
+        display: block;
+        overflow: hidden;
+        margin: 0 auto;
+        width: 50%;
+      }
+      server-uptime + server-uptime {
+        margin: 20px auto 0 auto;
+        border-top: 1px solid #999;
+      }
+      .days {
+        display: flex;
+        flex-direction: row;
+        flex-flow: wrap;
+      }
+      uptime-day {
+        display: flex;
+      }
+      span.uptime-day {
+        width: 10px;
+        height: 10px;
+        margin: 1px;
+      }
+      .hover {
+        display: none;
+      }
+      .uptime-day:hover + .hover {
+        display: flex;
+        position: absolute;
+        margin-top: -35px;
+        margin-left: -30px;
+        border-radius: 4px;
+        color: #eee;
+        background-color: #333;
+        padding: 10px;
+        font-size: 11px;
+      }
+      .good {
+        background-color: #8cc665
+      }
+      
+      .bad {
+        background-color: #ccc;
+      }
